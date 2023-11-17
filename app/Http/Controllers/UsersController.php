@@ -39,15 +39,12 @@ class UsersController extends Controller
         // dd($username);
         $mailadress = $request->input('mailadress');
         // dd($mailadress);
+
         $password = $request->input('password');
-        // dd($password);
-        $newpassword = $request->input('newpassword');
             if(isset($password)){
-                $password = DB::table('users')
-                    ->where('password', '=', '')
-                    ->get();
+                $password = bcrypt($request->input('newpassword'));
             }else{
-                $possword = DB::table('possword')->get();
+                $possword = Auth::user()->password;
             }
 
         $bio = $request->input('bio');
@@ -58,6 +55,7 @@ class UsersController extends Controller
                 'username' =>$username,
                 'mail' =>$mailadress,
                 'bio' =>$bio,
+                'password' =>$password,
             ]);
 
 
